@@ -5,6 +5,7 @@
 //      - "(tabs)"         -> the bottom-tab screens (Home, Directory, Profile)
 //      - "alumni/[id]"    -> one alumnus's details, which opens ON TOP of the tabs
 //                            (with a back arrow to return to the list)
+//      - "events/create"  -> the Create Event form (admins only), also on top of the tabs
 
 import { Redirect, Stack } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
@@ -33,6 +34,7 @@ export default function AppLayout() {
       {/* The tabs have their own header, so hide the Stack's header here */}
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="alumni/[id]" options={{ title: "Alumni Profile" }} />
+      <Stack.Screen name="events/create" options={{ title: "Create Event" }} />
     </Stack>
   );
 }
