@@ -1,6 +1,10 @@
 // app/(app)/_layout.js
 // Layout for the logged-IN screens.
-// If nobody is logged in, send them to the login screen. This "protects" these screens.
+// 1. If nobody is logged in, send them to the login screen (this "protects" these screens).
+// 2. Otherwise show a Stack containing:
+//      - "(tabs)"         -> the bottom-tab screens (Home, Directory, Profile)
+//      - "alumni/[id]"    -> one alumnus's details, which opens ON TOP of the tabs
+//                            (with a back arrow to return to the list)
 
 import { Redirect, Stack } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
@@ -23,6 +27,12 @@ export default function AppLayout() {
     return <Redirect href="/login" />;
   }
 
-  // Logged in -> show the requested screen.
-  return <Stack />;
+  // Logged in -> show the screens.
+  return (
+    <Stack>
+      {/* The tabs have their own header, so hide the Stack's header here */}
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="alumni/[id]" options={{ title: "Alumni Profile" }} />
+    </Stack>
+  );
 }

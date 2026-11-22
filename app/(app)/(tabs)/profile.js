@@ -12,14 +12,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
-  Linking,
   StyleSheet,
 } from "react-native";
-import { Stack } from "expo-router";
 import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
-import { useAuth } from "../../context/AuthContext";
-import { BRANCHES } from "../../constants/branches";
+import { db } from "../../../firebaseConfig";
+import { useAuth } from "../../../context/AuthContext";
+import { BRANCHES } from "../../../constants/branches";
+import InfoRow from "../../../components/InfoRow";
+import { openLink } from "../../../utils/openLink";
 
 export default function ProfileScreen() {
   // user = Firebase login (has uid, email). profile = our data from Firestore.
@@ -103,22 +103,10 @@ export default function ProfileScreen() {
     setBusy(false);
   }
 
-  // Open the LinkedIn link in the phone's browser.
-  function openLinkedin() {
-    let url = profile.linkedin;
-    // Add "https://" if the user didn't type it, so the phone knows it's a web link.
-    if (!url.startsWith("http")) {
-      url = "https://" + url;
-    }
-    Linking.openURL(url);
-  }
-
   // ---------- VIEW MODE ----------
   if (!editing) {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Stack.Screen options={{ title: "My Profile" }} />
-
         <Text style={styles.name}>{profile.name}</Text>
         <Text style={styles.role}>{profile.role}</Text>
 
@@ -132,17 +120,12 @@ export default function ProfileScreen() {
         <InfoRow label="Job Title" value={profile.jobTitle} />
         <InfoRow label="Phone" value={profile.phone} />
 
-        {/* LinkedIn: tappable if filled in */}
-        <View style={styles.row}>
-          <Text style={styles.label}>LinkedIn</Text>
-          {profile.linkedin ? (
-            <Text style={styles.link} onPress={openLinkedin}>
-              {profile.linkedin}
-            </Text>
-          ) : (
-            <Text style={styles.value}>-</Text>
-          )}
-        </View>
+        {/* LinkedIn: tappable link that opens the browser */}
+        <InfoRow
+          label="LinkedIn"
+          value={profile.linkedin}
+          onPress={() => openLink(profile.linkedin)}
+        />
 
         <TouchableOpacity style={styles.button} onPress={startEditing}>
           <Text style={styles.buttonText}>Edit Profile</Text>
@@ -154,8 +137,6 @@ export default function ProfileScreen() {
   // ---------- EDIT MODE ----------
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-      <Stack.Screen options={{ title: "Edit Profile" }} />
-
       <Text style={styles.label}>Name</Text>
       <TextInput style={styles.input} value={name} onChangeText={setName} />
 
@@ -226,16 +207,6 @@ export default function ProfileScreen() {
   );
 }
 
-// A small reusable piece that shows one "label: value" row.
-function InfoRow({ label, value }) {
-  return (
-    <View style={styles.row}>
-      <Text style={styles.label}>{label}</Text>
-      <Text style={styles.value}>{value || "-"}</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   container: { padding: 24, backgroundColor: "#fff", flexGrow: 1 },
@@ -248,10 +219,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   success: { color: "green", textAlign: "center", marginBottom: 12 },
-  row: { paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: "#eee" },
   label: { fontSize: 14, color: "#666", marginBottom: 4 },
-  value: { fontSize: 16 },
-  link: { fontSize: 16, color: "#2563eb", textDecorationLine: "underline" },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",

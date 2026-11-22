@@ -1,12 +1,11 @@
-// app/(app)/index.js
-// The Home screen, shown after logging in.
+// app/(app)/(tabs)/index.js
+// The Home tab, shown after logging in.
 // It greets the user by name, shows their role, and has a Log Out button.
 
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Stack, router } from "expo-router";
 import { signOut } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
-import { useAuth } from "../../context/AuthContext";
+import { auth } from "../../../firebaseConfig";
+import { useAuth } from "../../../context/AuthContext";
 
 export default function HomeScreen() {
   // Read the logged-in user and their Firestore profile from AuthContext.
@@ -19,18 +18,10 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Title shown in the top bar */}
-      <Stack.Screen options={{ title: "Home" }} />
-
       {/* profile can be empty for a moment right after signup, so use "?." to be safe */}
       <Text style={styles.title}>Welcome, {profile?.name || "there"}!</Text>
       <Text style={styles.info}>Email: {user.email}</Text>
       <Text style={styles.info}>Role: {profile?.role || "..."}</Text>
-
-      {/* router.push opens the Profile screen (app/(app)/profile.js) */}
-      <TouchableOpacity style={styles.profileButton} onPress={() => router.push("/profile")}>
-        <Text style={styles.buttonText}>My Profile</Text>
-      </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Log Out</Text>
@@ -43,15 +34,8 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24, gap: 8 },
   title: { fontSize: 24, fontWeight: "bold" },
   info: { fontSize: 16, color: "#444" },
-  profileButton: {
-    marginTop: 24,
-    backgroundColor: "#2563eb",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-  },
   button: {
-    marginTop: 12,
+    marginTop: 24,
     backgroundColor: "#dc2626",
     paddingVertical: 12,
     paddingHorizontal: 32,
