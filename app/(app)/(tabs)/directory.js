@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   FlatList,
   ScrollView,
   TouchableOpacity,
@@ -21,6 +20,7 @@ import { BRANCHES } from "../../../constants/branches";
 import Chip from "../../../components/Chip";
 import VerifiedBadge from "../../../components/VerifiedBadge";
 import { COLORS } from "../../../constants/theme";
+import AppInput from "../../../components/AppInput";
 
 export default function DirectoryScreen() {
   const [alumni, setAlumni] = useState([]); // all alumni from Firestore
@@ -88,7 +88,7 @@ export default function DirectoryScreen() {
   return (
     <View style={styles.container}>
       {/* Search box */}
-      <TextInput
+      <AppInput
         style={styles.search}
         placeholder="Search by name..."
         value={search}
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: COLORS.card,
   },
-  name: { fontSize: 17, fontWeight: "bold" },
+  name: { color: COLORS.text, fontSize: 17, fontWeight: "bold" },
   job: { fontSize: 15, color: COLORS.text, marginTop: 2 },
   meta: { fontSize: 13, color: COLORS.textMuted, marginTop: 4 },
 });

@@ -5,7 +5,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   StyleSheet,
@@ -15,6 +14,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { getAuthErrorMessage } from "../../utils/authErrors";
 import { COLORS } from "../../constants/theme";
+import AppInput from "../../components/AppInput";
 
 export default function LoginScreen() {
   // "State" = values that can change while the screen is open.
@@ -49,7 +49,7 @@ export default function LoginScreen() {
       <Text style={styles.title}>Alumni Connect</Text>
       <Text style={styles.subtitle}>Log in to continue</Text>
 
-      <TextInput
+      <AppInput
         style={styles.input}
         placeholder="Email"
         value={email}
@@ -58,7 +58,7 @@ export default function LoginScreen() {
         keyboardType="email-address"
       />
 
-      <TextInput
+      <AppInput
         style={styles.input}
         placeholder="Password"
         value={password}
@@ -87,7 +87,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", padding: 24, backgroundColor: COLORS.white },
-  title: { fontSize: 28, fontWeight: "bold", textAlign: "center" },
+  title: { color: COLORS.text, fontSize: 28, fontWeight: "bold", textAlign: "center" },
   subtitle: { fontSize: 16, color: COLORS.textMuted, textAlign: "center", marginBottom: 24 },
   input: {
     borderWidth: 1,

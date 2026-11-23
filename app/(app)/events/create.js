@@ -6,7 +6,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
@@ -18,6 +17,7 @@ import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import { isValidDate } from "../../../utils/formatDate";
 import { COLORS } from "../../../constants/theme";
+import AppInput from "../../../components/AppInput";
 
 export default function CreateEventScreen() {
   const { user, profile } = useAuth();
@@ -73,10 +73,10 @@ export default function CreateEventScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
       <Text style={styles.label}>Title</Text>
-      <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Alumni Meet 2026" />
+      <AppInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Alumni Meet 2026" />
 
       <Text style={styles.label}>Description</Text>
-      <TextInput
+      <AppInput
         style={[styles.input, styles.multiline]}
         value={description}
         onChangeText={setDescription}
@@ -85,7 +85,7 @@ export default function CreateEventScreen() {
       />
 
       <Text style={styles.label}>Date (YYYY-MM-DD)</Text>
-      <TextInput
+      <AppInput
         style={styles.input}
         value={date}
         onChangeText={setDate}
@@ -95,7 +95,7 @@ export default function CreateEventScreen() {
       />
 
       <Text style={styles.label}>Venue</Text>
-      <TextInput style={styles.input} value={venue} onChangeText={setVenue} placeholder="Main Auditorium" />
+      <AppInput style={styles.input} value={venue} onChangeText={setVenue} placeholder="Main Auditorium" />
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
 

@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 6,
   },
-  title: { fontSize: 18, fontWeight: "bold" },
+  title: { color: COLORS.text, fontSize: 18, fontWeight: "bold" },
   description: { fontSize: 15, color: COLORS.text, marginTop: 8 },
   postedBy: { fontSize: 13, color: COLORS.textMuted, marginTop: 8 },
   applyButton: {

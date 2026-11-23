@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: COLORS.card,
   },
-  title: { fontSize: 18, fontWeight: "bold", marginBottom: 4 },
+  title: { color: COLORS.text, fontSize: 18, fontWeight: "bold", marginBottom: 4 },
   description: { fontSize: 15, color: COLORS.text, marginTop: 8 },
   footer: {
     flexDirection: "row", // put count and button side by side

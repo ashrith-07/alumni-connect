@@ -6,7 +6,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
@@ -18,6 +17,7 @@ import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import Chip from "../../../components/Chip";
 import { COLORS } from "../../../constants/theme";
+import AppInput from "../../../components/AppInput";
 
 export default function PostJobScreen() {
   const { user, profile } = useAuth();
@@ -86,7 +86,7 @@ export default function PostJobScreen() {
       </View>
 
       <Text style={styles.label}>Title</Text>
-      <TextInput
+      <AppInput
         style={styles.input}
         value={title}
         onChangeText={setTitle}
@@ -94,10 +94,10 @@ export default function PostJobScreen() {
       />
 
       <Text style={styles.label}>Company</Text>
-      <TextInput style={styles.input} value={company} onChangeText={setCompany} placeholder="Google" />
+      <AppInput style={styles.input} value={company} onChangeText={setCompany} placeholder="Google" />
 
       <Text style={styles.label}>Description</Text>
-      <TextInput
+      <AppInput
         style={[styles.input, styles.multiline]}
         value={description}
         onChangeText={setDescription}
@@ -106,7 +106,7 @@ export default function PostJobScreen() {
       />
 
       <Text style={styles.label}>Apply Link</Text>
-      <TextInput
+      <AppInput
         style={styles.input}
         value={applyLink}
         onChangeText={setApplyLink}

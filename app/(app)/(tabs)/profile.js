@@ -8,7 +8,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
@@ -22,6 +21,7 @@ import InfoRow from "../../../components/InfoRow";
 import VerifiedBadge from "../../../components/VerifiedBadge";
 import { openLink } from "../../../utils/openLink";
 import { COLORS } from "../../../constants/theme";
+import AppInput from "../../../components/AppInput";
 
 export default function ProfileScreen() {
   // user = Firebase login (has uid, email). profile = our data from Firestore.
@@ -146,10 +146,10 @@ export default function ProfileScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
       <Text style={styles.label}>Name</Text>
-      <TextInput style={styles.input} value={name} onChangeText={setName} />
+      <AppInput style={styles.input} value={name} onChangeText={setName} />
 
       <Text style={styles.label}>Graduation Year</Text>
-      <TextInput
+      <AppInput
         style={styles.input}
         value={graduationYear}
         onChangeText={setGraduationYear}
@@ -175,13 +175,13 @@ export default function ProfileScreen() {
       </View>
 
       <Text style={styles.label}>Company</Text>
-      <TextInput style={styles.input} value={company} onChangeText={setCompany} />
+      <AppInput style={styles.input} value={company} onChangeText={setCompany} />
 
       <Text style={styles.label}>Job Title</Text>
-      <TextInput style={styles.input} value={jobTitle} onChangeText={setJobTitle} />
+      <AppInput style={styles.input} value={jobTitle} onChangeText={setJobTitle} />
 
       <Text style={styles.label}>Phone</Text>
-      <TextInput
+      <AppInput
         style={styles.input}
         value={phone}
         onChangeText={setPhone}
@@ -189,7 +189,7 @@ export default function ProfileScreen() {
       />
 
       <Text style={styles.label}>LinkedIn URL</Text>
-      <TextInput
+      <AppInput
         style={styles.input}
         value={linkedin}
         onChangeText={setLinkedin}
@@ -218,7 +218,7 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   container: { padding: 24, backgroundColor: COLORS.white, flexGrow: 1 },
-  name: { fontSize: 26, fontWeight: "bold", textAlign: "center" },
+  name: { color: COLORS.text, fontSize: 26, fontWeight: "bold", textAlign: "center" },
   role: {
     fontSize: 16,
     color: COLORS.primary,

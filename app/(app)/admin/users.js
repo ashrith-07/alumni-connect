@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   FlatList,
   ScrollView,
   TouchableOpacity,
@@ -24,6 +23,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { COLORS } from "../../../constants/theme";
 import Chip from "../../../components/Chip";
 import VerifiedBadge from "../../../components/VerifiedBadge";
+import AppInput from "../../../components/AppInput";
 
 const ROLES = ["alumni", "student", "admin"];
 
@@ -113,7 +113,7 @@ export default function ManageUsersScreen() {
 
   return (
     <View style={styles.container}>
-      <TextInput
+      <AppInput
         style={styles.search}
         placeholder="Search by name..."
         value={search}

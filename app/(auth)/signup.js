@@ -6,7 +6,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   ScrollView,
@@ -18,6 +17,7 @@ import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebaseConfig";
 import { getAuthErrorMessage } from "../../utils/authErrors";
 import { COLORS } from "../../constants/theme";
+import AppInput from "../../components/AppInput";
 
 export default function SignupScreen() {
   const [name, setName] = useState("");
@@ -65,9 +65,9 @@ export default function SignupScreen() {
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
       <Text style={styles.title}>Create Account</Text>
 
-      <TextInput style={styles.input} placeholder="Full name" value={name} onChangeText={setName} />
+      <AppInput style={styles.input} placeholder="Full name" value={name} onChangeText={setName} />
 
-      <TextInput
+      <AppInput
         style={styles.input}
         placeholder="Email"
         value={email}
@@ -76,7 +76,7 @@ export default function SignupScreen() {
         keyboardType="email-address"
       />
 
-      <TextInput
+      <AppInput
         style={styles.input}
         placeholder="Password (min 6 characters)"
         value={password}
@@ -125,7 +125,7 @@ export default function SignupScreen() {
 
 const styles = StyleSheet.create({
   container: { flexGrow: 1, justifyContent: "center", padding: 24, backgroundColor: COLORS.white },
-  title: { fontSize: 28, fontWeight: "bold", textAlign: "center", marginBottom: 24 },
+  title: { color: COLORS.text, fontSize: 28, fontWeight: "bold", textAlign: "center", marginBottom: 24 },
   input: {
     borderWidth: 1,
     borderColor: COLORS.border,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     fontSize: 16,
   },
-  label: { fontSize: 16, marginBottom: 8 },
+  label: { color: COLORS.text, fontSize: 16, marginBottom: 8 },
   roleRow: { flexDirection: "row", gap: 12, marginBottom: 16 }, // side by side
   roleButton: {
     flex: 1,

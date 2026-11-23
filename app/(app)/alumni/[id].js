@@ -84,7 +84,7 @@ export default function AlumniDetailScreen() {
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24 },
   container: { padding: 24, backgroundColor: COLORS.white, flexGrow: 1 },
-  name: { fontSize: 26, fontWeight: "bold", textAlign: "center" },
+  name: { color: COLORS.text, fontSize: 26, fontWeight: "bold", textAlign: "center" },
   role: {
     fontSize: 16,
     color: COLORS.primary,
