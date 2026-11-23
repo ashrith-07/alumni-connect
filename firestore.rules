@@ -1,0 +1,80 @@
+// firestore.rules
+// Firestore Security Rules: checked on Google's servers for EVERY read and write.
+// Even if someone bypasses our app, these rules still protect the database.
+// HOW TO USE: copy this whole file into Firebase Console -> Firestore Database -> Rules -> Publish.
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- Helper functions ----------
+
+    // Is the person logged in?
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Read the role ("student", "alumni" or "admin") of the logged-in person
+    // from their document in the "users" collection.
+    function myRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    // ---------- users collection ----------
+    match /users/{userId} {
+      // Any logged-in user can view profiles (needed for the Directory).
+      allow read: if signedIn();
+
+      // At sign up, you can only create YOUR OWN document,
+      // and you can only pick "student" or "alumni" (nobody can sign up as admin).
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role in ['student', 'alumni'];
+
+      // You can only edit YOUR OWN profile, and you cannot change your role.
+      allow update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == resource.data.role;
+
+      // Nobody can delete profiles from the app.
+      allow delete: if false;
+    }
+
+    // ---------- events collection ----------
+    match /events/{eventId} {
+      // Any logged-in user can view events.
+      allow read: if signedIn();
+
+      // Only admins can create or delete events.
+      allow create, delete: if signedIn() && myRole() == 'admin';
+
+      // Updating an event:
+      // - admins can change anything
+      // - everyone else can ONLY change the "rsvps" list,
+      //   and only by adding or removing THEIR OWN uid.
+      allow update: if signedIn() && (
+        myRole() == 'admin' || (
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rsvps'])
+          && request.resource.data.rsvps.toSet().difference(resource.data.rsvps.toSet())
+               .union(resource.data.rsvps.toSet().difference(request.resource.data.rsvps.toSet()))
+               .hasOnly([request.auth.uid])
+        )
+      );
+    }
+
+    // ---------- jobs collection ----------
+    match /jobs/{jobId} {
+      // Any logged-in user can view jobs.
+      allow read: if signedIn();
+
+      // Only alumni can post jobs, and "postedBy" must be their own uid
+      // (so nobody can post pretending to be someone else).
+      allow create: if signedIn()
+        && myRole() == 'alumni'
+        && request.resource.data.postedBy == request.auth.uid;
+
+      // Only the person who posted a job can edit or delete it.
+      allow update, delete: if signedIn() && resource.data.postedBy == request.auth.uid;
+    }
+  }
+}
