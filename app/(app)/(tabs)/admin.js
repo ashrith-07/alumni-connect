@@ -19,6 +19,8 @@ import { useAuth } from "../../../context/AuthContext";
 import { COLORS } from "../../../constants/theme";
 import { formatDate, todayString } from "../../../utils/formatDate";
 import { shareAlumniCsv } from "../../../utils/exportCsv";
+import { Ionicons } from "@expo/vector-icons";
+import IconText from "../../../components/IconText";
 
 export default function AdminDashboard() {
   const { profile } = useAuth();
@@ -127,7 +129,8 @@ export default function AdminDashboard() {
 
       {/* Action buttons */}
       <TouchableOpacity style={styles.button} onPress={() => router.push("/admin/users")}>
-        <Text style={styles.buttonText}>👥 Manage Users</Text>
+        <Ionicons name="people-outline" size={18} color={COLORS.white} />
+        <Text style={styles.buttonText}>Manage Users</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -138,7 +141,10 @@ export default function AdminDashboard() {
         {exporting ? (
           <ActivityIndicator color={COLORS.white} />
         ) : (
-          <Text style={styles.buttonText}>📤 Export Alumni (CSV)</Text>
+          <>
+            <Ionicons name="share-outline" size={18} color={COLORS.white} />
+            <Text style={styles.buttonText}>Export Alumni (CSV)</Text>
+          </>
         )}
       </TouchableOpacity>
 
@@ -157,9 +163,10 @@ export default function AdminDashboard() {
         events.map((event) => (
           <View key={event.id} style={styles.eventRow}>
             <Text style={styles.eventTitle}>{event.title}</Text>
-            <Text style={styles.eventMeta}>
-              📅 {formatDate(event.date)} • {(event.rsvps || []).length} going
-            </Text>
+            <IconText
+              icon="calendar-outline"
+              text={`${formatDate(event.date)}  •  ${(event.rsvps || []).length} going`}
+            />
           </View>
         ))
       )}
@@ -226,6 +233,9 @@ const styles = StyleSheet.create({
   statValue: { fontSize: 28, fontWeight: "bold", color: COLORS.primaryDark },
   statLabel: { fontSize: 13, color: COLORS.text, marginTop: 4 },
   button: {
+    flexDirection: "row", // icon and text side by side
+    justifyContent: "center",
+    gap: 8,
     backgroundColor: COLORS.primary,
     padding: 14,
     borderRadius: 8,
@@ -262,5 +272,4 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   eventTitle: { fontSize: 15, fontWeight: "bold", color: COLORS.text },
-  eventMeta: { fontSize: 13, color: COLORS.textMuted, marginTop: 2 },
 });

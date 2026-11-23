@@ -43,6 +43,7 @@ Built with **Expo (React Native)** and **Firebase**, in plain JavaScript.
 | Database | Cloud Firestore |
 | Saving the login on the phone | AsyncStorage |
 | CSV export | expo-file-system and expo-sharing |
+| Icons | @expo/vector-icons (Ionicons) |
 
 ## Project structure
 

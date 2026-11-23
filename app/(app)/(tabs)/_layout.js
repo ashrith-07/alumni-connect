@@ -3,16 +3,20 @@
 // "name" must match a file in this folder:
 //   index.js -> Home, directory.js -> Directory, events.js -> Events,
 //   jobs.js -> Jobs, profile.js -> Profile, admin.js -> Admin (admins only)
-// We use emoji as icons so we don't need an extra icon library.
+// Icons come from Ionicons (part of @expo/vector-icons).
 
-import { Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router/tabs";
 import { COLORS } from "../../../constants/theme";
 import { useAuth } from "../../../context/AuthContext";
 
-// Small helper that turns an emoji into a tab icon.
-function TabIcon({ emoji }) {
-  return <Text style={{ fontSize: 20 }}>{emoji}</Text>;
+// Builds the icon for one tab.
+// The tab bar tells us the colour and size, and whether the tab is selected ("focused").
+// Selected tab -> filled icon (e.g. "home"); other tabs -> outline icon (e.g. "home-outline").
+function tabIcon(name) {
+  return ({ color, size, focused }) => (
+    <Ionicons name={focused ? name : `${name}-outline`} size={size} color={color} />
+  );
 }
 
 export default function TabsLayout() {
@@ -32,30 +36,30 @@ export default function TabsLayout() {
     >
       <Tabs.Screen
         name="index"
-        options={{ title: "Home", tabBarIcon: () => <TabIcon emoji="🏠" /> }}
+        options={{ title: "Home", tabBarIcon: tabIcon("home") }}
       />
       <Tabs.Screen
         name="directory"
-        options={{ title: "Directory", tabBarIcon: () => <TabIcon emoji="👥" /> }}
+        options={{ title: "Directory", tabBarIcon: tabIcon("people") }}
       />
       <Tabs.Screen
         name="events"
-        options={{ title: "Events", tabBarIcon: () => <TabIcon emoji="📅" /> }}
+        options={{ title: "Events", tabBarIcon: tabIcon("calendar") }}
       />
       <Tabs.Screen
         name="jobs"
-        options={{ title: "Jobs", tabBarIcon: () => <TabIcon emoji="💼" /> }}
+        options={{ title: "Jobs", tabBarIcon: tabIcon("briefcase") }}
       />
       <Tabs.Screen
         name="profile"
-        options={{ title: "My Profile", tabBarIcon: () => <TabIcon emoji="👤" /> }}
+        options={{ title: "My Profile", tabBarIcon: tabIcon("person") }}
       />
       {/* Admin tab: "href: null" HIDES the tab, so only admins see it */}
       <Tabs.Screen
         name="admin"
         options={{
           title: "Admin",
-          tabBarIcon: () => <TabIcon emoji="📊" />,
+          tabBarIcon: tabIcon("stats-chart"),
           href: isAdmin ? undefined : null,
         }}
       />

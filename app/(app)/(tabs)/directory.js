@@ -123,7 +123,7 @@ export default function DirectoryScreen() {
         renderItem={({ item }) => (
           // Tapping a card opens app/(app)/alumni/[id].js with this person's id.
           <TouchableOpacity style={styles.card} onPress={() => router.push(`/alumni/${item.id}`)}>
-            {/* Name, with a "✓ Verified" badge next to it if an admin verified them */}
+            {/* Name, with a "Verified" badge next to it if an admin verified them */}
             <View style={styles.nameRow}>
               <Text style={styles.name}>{item.name}</Text>
               {item.verified ? <VerifiedBadge /> : null}

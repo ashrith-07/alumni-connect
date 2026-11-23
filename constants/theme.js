@@ -7,7 +7,7 @@ export const COLORS = {
   primary: "#2563eb", // main blue: buttons, links, selected chips
   primaryLight: "#dbeafe", // pale blue: small labels
   primaryDark: "#1e40af", // dark blue: text on pale blue
-  success: "#16a34a", // green: "Going ✓", "Apply", success messages
+  success: "#16a34a", // green: "Going", "Apply", success messages
   danger: "#dc2626", // red: errors, "Log Out"
   white: "#ffffff", // text on coloured buttons
   background: "#ffffff", // screen background

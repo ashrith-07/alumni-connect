@@ -1,7 +1,7 @@
 // app/(app)/admin/users.js
 // "Manage Users" screen (admins only).
 // Lists ALL users with search and role filter. For each user the admin can:
-//   - Verify / Unverify alumni (adds a "✓ Verified" badge)
+//   - Verify / Unverify alumni (adds a "Verified" badge)
 //   - Remove / Restore the user (removed users are logged out and blocked)
 // Tapping a user's name opens their profile.
 

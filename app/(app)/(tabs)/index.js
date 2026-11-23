@@ -8,6 +8,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import { COLORS } from "../../../constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function HomeScreen() {
   // Read the logged-in user and their Firestore profile from AuthContext.
@@ -41,26 +42,28 @@ export default function HomeScreen() {
 
       {/* Shortcut buttons that jump to other tabs */}
       <Text style={styles.sectionTitle}>Quick links</Text>
-      <Shortcut emoji="👥" label="Alumni Directory" onPress={() => router.push("/directory")} />
-      <Shortcut emoji="📅" label="Upcoming Events" onPress={() => router.push("/events")} />
-      <Shortcut emoji="💼" label="Jobs Board" onPress={() => router.push("/jobs")} />
-      <Shortcut emoji="👤" label="My Profile" onPress={() => router.push("/profile")} />
+      <Shortcut icon="people-outline" label="Alumni Directory" onPress={() => router.push("/directory")} />
+      <Shortcut icon="calendar-outline" label="Upcoming Events" onPress={() => router.push("/events")} />
+      <Shortcut icon="briefcase-outline" label="Jobs Board" onPress={() => router.push("/jobs")} />
+      <Shortcut icon="person-outline" label="My Profile" onPress={() => router.push("/profile")} />
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Ionicons name="log-out-outline" size={18} color={COLORS.danger} />
         <Text style={styles.logoutText}>Log Out</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 }
 
-// One shortcut row: emoji + label + arrow.
-function Shortcut({ emoji, label, onPress }) {
+// One shortcut row: icon + label on the left, arrow on the right.
+function Shortcut({ icon, label, onPress }) {
   return (
     <TouchableOpacity style={styles.shortcut} onPress={onPress}>
-      <Text style={styles.shortcutText}>
-        {emoji}  {label}
-      </Text>
-      <Text style={styles.arrow}>›</Text>
+      <View style={styles.shortcutLeft}>
+        <Ionicons name={icon} size={20} color={COLORS.primary} />
+        <Text style={styles.shortcutText}>{label}</Text>
+      </View>
+      <Ionicons name="chevron-forward" size={18} color={COLORS.textMuted} />
     </TouchableOpacity>
   );
 }
@@ -109,9 +112,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.card,
     marginBottom: 10,
   },
+  shortcutLeft: { flexDirection: "row", alignItems: "center", gap: 12 }, // icon next to label
   shortcutText: { fontSize: 16, color: COLORS.text },
-  arrow: { fontSize: 22, color: COLORS.textMuted },
   logoutButton: {
+    flexDirection: "row", // icon and text side by side
+    justifyContent: "center",
+    gap: 8,
     marginTop: 16,
     padding: 14,
     borderRadius: 8,

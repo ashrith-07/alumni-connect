@@ -18,6 +18,7 @@ import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import { openLink } from "../../../utils/openLink";
 import { COLORS } from "../../../constants/theme";
+import IconText from "../../../components/IconText";
 
 export default function JobsScreen() {
   const { profile } = useAuth();
@@ -73,7 +74,7 @@ export default function JobsScreen() {
             {/* Small label: "Job" or "Internship" */}
             <Text style={styles.type}>{item.type}</Text>
             <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.company}>🏢 {item.company}</Text>
+            <IconText icon="business-outline" text={item.company} />
             <Text style={styles.description}>{item.description}</Text>
             <Text style={styles.postedBy}>Posted by {item.postedByName}</Text>
 
@@ -120,7 +121,6 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   title: { fontSize: 18, fontWeight: "bold" },
-  company: { fontSize: 15, color: COLORS.text, marginTop: 2 },
   description: { fontSize: 15, color: COLORS.text, marginTop: 8 },
   postedBy: { fontSize: 13, color: COLORS.textMuted, marginTop: 8 },
   applyButton: {

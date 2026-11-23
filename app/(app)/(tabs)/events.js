@@ -27,6 +27,8 @@ import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import { formatDate } from "../../../utils/formatDate";
 import { COLORS } from "../../../constants/theme";
+import { Ionicons } from "@expo/vector-icons";
+import IconText from "../../../components/IconText";
 
 export default function EventsScreen() {
   const { user, profile } = useAuth();
@@ -104,19 +106,20 @@ export default function EventsScreen() {
           return (
             <View style={styles.card}>
               <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.meta}>📅 {formatDate(item.date)}</Text>
-              <Text style={styles.meta}>📍 {item.venue}</Text>
+              <IconText icon="calendar-outline" text={formatDate(item.date)} />
+              <IconText icon="location-outline" text={item.venue} />
               <Text style={styles.description}>{item.description}</Text>
 
               <View style={styles.footer}>
                 <Text style={styles.count}>{rsvps.length} going</Text>
 
-                {/* Blue "RSVP" if not going, green "Going ✓" if going */}
+                {/* Blue "RSVP" if not going, green "Going" with a tick if going */}
                 <TouchableOpacity
                   style={[styles.rsvpButton, going && styles.goingButton]}
                   onPress={() => toggleRsvp(item)}
                 >
-                  <Text style={styles.rsvpText}>{going ? "Going ✓" : "RSVP"}</Text>
+                  {going ? <Ionicons name="checkmark" size={16} color={COLORS.white} /> : null}
+                  <Text style={styles.rsvpText}>{going ? "Going" : "RSVP"}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -149,7 +152,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.card,
   },
   title: { fontSize: 18, fontWeight: "bold", marginBottom: 4 },
-  meta: { fontSize: 14, color: COLORS.text, marginBottom: 2 },
   description: { fontSize: 15, color: COLORS.text, marginTop: 8 },
   footer: {
     flexDirection: "row", // put count and button side by side
@@ -159,6 +161,9 @@ const styles = StyleSheet.create({
   },
   count: { fontSize: 14, color: COLORS.textMuted },
   rsvpButton: {
+    flexDirection: "row", // tick icon and text side by side
+    alignItems: "center",
+    gap: 4,
     backgroundColor: COLORS.primary,
     paddingVertical: 8,
     paddingHorizontal: 20,
