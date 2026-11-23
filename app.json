@@ -10,12 +10,14 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.alumniconnect.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+      },
+      "userInterfaceStyle": "light"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -23,6 +25,18 @@
     "plugins": [
       "expo-router"
     ],
-    "scheme": "alumniconnect"
+    "scheme": "alumniconnect",
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "bac53b72-65fa-4340-a7c7-21fc8b21acf8"
+      }
+    },
+    "owner": "ashrith.07",
+    "backgroundColor": "#ffffff"
   }
 }
