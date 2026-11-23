@@ -19,6 +19,7 @@ import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { BRANCHES } from "../../../constants/branches";
 import Chip from "../../../components/Chip";
+import VerifiedBadge from "../../../components/VerifiedBadge";
 import { COLORS } from "../../../constants/theme";
 
 export default function DirectoryScreen() {
@@ -41,7 +42,10 @@ export default function DirectoryScreen() {
       alumniQuery,
       (snapshot) => {
         // Turn each Firestore document into a plain object, keeping its id.
-        const list = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+        // Then hide anyone an admin has removed.
+        const list = snapshot.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .filter((person) => !person.removed);
         // Sort alphabetically by name.
         list.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
         setAlumni(list);
@@ -119,7 +123,11 @@ export default function DirectoryScreen() {
         renderItem={({ item }) => (
           // Tapping a card opens app/(app)/alumni/[id].js with this person's id.
           <TouchableOpacity style={styles.card} onPress={() => router.push(`/alumni/${item.id}`)}>
-            <Text style={styles.name}>{item.name}</Text>
+            {/* Name, with a "✓ Verified" badge next to it if an admin verified them */}
+            <View style={styles.nameRow}>
+              <Text style={styles.name}>{item.name}</Text>
+              {item.verified ? <VerifiedBadge /> : null}
+            </View>
             {/* Only show job line if they filled in job title or company */}
             {item.jobTitle || item.company ? (
               <Text style={styles.job}>
@@ -141,6 +149,7 @@ export default function DirectoryScreen() {
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   container: { flex: 1, padding: 16, backgroundColor: COLORS.white },
+  nameRow: { flexDirection: "row", alignItems: "center", gap: 8 }, // name and badge side by side
   search: {
     borderWidth: 1,
     borderColor: COLORS.border,

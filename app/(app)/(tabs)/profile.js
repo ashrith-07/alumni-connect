@@ -19,6 +19,7 @@ import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import { BRANCHES } from "../../../constants/branches";
 import InfoRow from "../../../components/InfoRow";
+import VerifiedBadge from "../../../components/VerifiedBadge";
 import { openLink } from "../../../utils/openLink";
 import { COLORS } from "../../../constants/theme";
 
@@ -110,6 +111,12 @@ export default function ProfileScreen() {
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.name}>{profile.name}</Text>
         <Text style={styles.role}>{profile.role}</Text>
+        {/* Show the badge (centered) if an admin verified this user */}
+        {profile.verified ? (
+          <View style={styles.badgeWrap}>
+            <VerifiedBadge />
+          </View>
+        ) : null}
 
         {message ? <Text style={styles.success}>{message}</Text> : null}
 
@@ -219,6 +226,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize", // "alumni" -> "Alumni"
     marginBottom: 16,
   },
+  badgeWrap: { alignItems: "center", marginTop: -8, marginBottom: 12 }, // centers the badge
   success: { color: COLORS.success, textAlign: "center", marginBottom: 12 },
   label: { fontSize: 14, color: COLORS.textMuted, marginBottom: 4 },
   input: {

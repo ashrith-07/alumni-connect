@@ -7,6 +7,7 @@
 //                            (with a back arrow to return to the list)
 //      - "events/create"  -> the Create Event form (admins only), also on top of the tabs
 //      - "jobs/create"    -> the Post a Job form (alumni only), also on top of the tabs
+//      - "admin/users"    -> Manage Users (admins only), also on top of the tabs
 
 import { Redirect, Stack } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
@@ -45,6 +46,7 @@ export default function AppLayout() {
       <Stack.Screen name="alumni/[id]" options={{ title: "Alumni Profile" }} />
       <Stack.Screen name="events/create" options={{ title: "Create Event" }} />
       <Stack.Screen name="jobs/create" options={{ title: "Post a Job" }} />
+      <Stack.Screen name="admin/users" options={{ title: "Manage Users" }} />
     </Stack>
   );
 }

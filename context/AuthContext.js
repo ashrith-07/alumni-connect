@@ -4,7 +4,8 @@
 // and any screen can read it using useAuth().
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { Alert } from "react-native";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../firebaseConfig";
 
@@ -39,7 +40,21 @@ export function AuthProvider({ children }) {
         stopProfile = onSnapshot(
           userDoc,
           (snapshot) => {
-            setProfile(snapshot.exists() ? snapshot.data() : null);
+            const data = snapshot.exists() ? snapshot.data() : null;
+
+            // If an admin has removed this user, log them out straight away.
+            if (data && data.removed) {
+              // Stop listening first, so the alert only shows once.
+              if (stopProfile) {
+                stopProfile();
+                stopProfile = null;
+              }
+              Alert.alert("Account removed", "Your account has been removed by an admin.");
+              signOut(auth);
+              return;
+            }
+
+            setProfile(data);
           },
           () => setProfile(null) // if reading fails, just show no profile
         );

@@ -17,6 +17,15 @@ export function isValidDate(text) {
   return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
 }
 
+// Today's date as text in the same "YYYY-MM-DD" format, e.g. "2026-11-23".
+// Used to find upcoming events (events whose date is today or later).
+export function todayString() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, "0"); // 3 -> "03"
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
 // Turn "2026-12-15" into a friendly "Tue Dec 15 2026".
 export function formatDate(text) {
   if (!text || !isValidDate(text)) return text || "";

@@ -2,12 +2,13 @@
 // Creates the BOTTOM TAB BAR. Each <Tabs.Screen> is one tab.
 // "name" must match a file in this folder:
 //   index.js -> Home, directory.js -> Directory, events.js -> Events,
-//   jobs.js -> Jobs, profile.js -> Profile
+//   jobs.js -> Jobs, profile.js -> Profile, admin.js -> Admin (admins only)
 // We use emoji as icons so we don't need an extra icon library.
 
 import { Text } from "react-native";
 import { Tabs } from "expo-router/tabs";
 import { COLORS } from "../../../constants/theme";
+import { useAuth } from "../../../context/AuthContext";
 
 // Small helper that turns an emoji into a tab icon.
 function TabIcon({ emoji }) {
@@ -15,6 +16,10 @@ function TabIcon({ emoji }) {
 }
 
 export default function TabsLayout() {
+  // Check if the logged-in user is an admin (to show/hide the Admin tab).
+  const { profile } = useAuth();
+  const isAdmin = profile?.role === "admin";
+
   return (
     // screenOptions apply to every tab: blue for the selected tab,
     // grey for the others, and a bold title in the top bar.
@@ -44,6 +49,15 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="profile"
         options={{ title: "My Profile", tabBarIcon: () => <TabIcon emoji="👤" /> }}
+      />
+      {/* Admin tab: "href: null" HIDES the tab, so only admins see it */}
+      <Tabs.Screen
+        name="admin"
+        options={{
+          title: "Admin",
+          tabBarIcon: () => <TabIcon emoji="📊" />,
+          href: isAdmin ? undefined : null,
+        }}
       />
     </Tabs>
   );

@@ -9,6 +9,7 @@ import { useLocalSearchParams } from "expo-router";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import InfoRow from "../../../components/InfoRow";
+import VerifiedBadge from "../../../components/VerifiedBadge";
 import { openLink } from "../../../utils/openLink";
 import { COLORS } from "../../../constants/theme";
 
@@ -58,6 +59,12 @@ export default function AlumniDetailScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.name}>{person.name}</Text>
       <Text style={styles.role}>{person.role}</Text>
+      {/* Show the badge (centered) if an admin verified this person */}
+      {person.verified ? (
+        <View style={styles.badgeWrap}>
+          <VerifiedBadge />
+        </View>
+      ) : null}
 
       <InfoRow label="Email" value={person.email} />
       <InfoRow label="Graduation Year" value={person.graduationYear} />
@@ -85,5 +92,6 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     marginBottom: 16,
   },
+  badgeWrap: { alignItems: "center", marginTop: -8, marginBottom: 12 }, // centers the badge
   error: { color: COLORS.danger, fontSize: 16, textAlign: "center" },
 });

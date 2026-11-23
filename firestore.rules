@@ -20,21 +20,38 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
     }
 
+    // Has an admin removed (blocked) the logged-in person?
+    // .get('removed', false) means "use false if the field doesn't exist".
+    function isActive() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('removed', false) == false;
+    }
+
     // ---------- users collection ----------
     match /users/{userId} {
       // Any logged-in user can view profiles (needed for the Directory).
       allow read: if signedIn();
 
       // At sign up, you can only create YOUR OWN document,
-      // and you can only pick "student" or "alumni" (nobody can sign up as admin).
+      // you can only pick "student" or "alumni" (nobody can sign up as admin),
+      // and you cannot mark yourself verified or removed.
       allow create: if signedIn()
         && request.auth.uid == userId
-        && request.resource.data.role in ['student', 'alumni'];
+        && request.resource.data.role in ['student', 'alumni']
+        && !('verified' in request.resource.data)
+        && !('removed' in request.resource.data);
 
-      // You can only edit YOUR OWN profile, and you cannot change your role.
+      // You can only edit YOUR OWN profile (if you're not removed),
+      // and you cannot change your role, verified badge or removed status.
       allow update: if signedIn()
         && request.auth.uid == userId
-        && request.resource.data.role == resource.data.role;
+        && isActive()
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'verified', 'removed']);
+
+      // Admins can change ONLY "verified" and "removed" on other users (not on admins).
+      allow update: if signedIn()
+        && myRole() == 'admin'
+        && resource.data.role != 'admin'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['verified', 'removed']);
 
       // Nobody can delete profiles from the app.
       allow delete: if false;
@@ -52,7 +69,8 @@ service cloud.firestore {
       // - admins can change anything
       // - everyone else can ONLY change the "rsvps" list,
       //   and only by adding or removing THEIR OWN uid.
-      allow update: if signedIn() && (
+      // - removed users can't RSVP at all.
+      allow update: if signedIn() && isActive() && (
         myRole() == 'admin' || (
           request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rsvps'])
           && request.resource.data.rsvps.toSet().difference(resource.data.rsvps.toSet())
@@ -67,9 +85,10 @@ service cloud.firestore {
       // Any logged-in user can view jobs.
       allow read: if signedIn();
 
-      // Only alumni can post jobs, and "postedBy" must be their own uid
-      // (so nobody can post pretending to be someone else).
+      // Only alumni (who are not removed) can post jobs, and "postedBy" must be
+      // their own uid (so nobody can post pretending to be someone else).
       allow create: if signedIn()
+        && isActive()
         && myRole() == 'alumni'
         && request.resource.data.postedBy == request.auth.uid;
 
