@@ -1,7 +1,8 @@
 // app/(app)/(tabs)/_layout.js
 // Creates the BOTTOM TAB BAR. Each <Tabs.Screen> is one tab.
 // "name" must match a file in this folder:
-//   index.js -> Home, directory.js -> Directory, events.js -> Events, profile.js -> Profile
+//   index.js -> Home, directory.js -> Directory, events.js -> Events,
+//   jobs.js -> Jobs, profile.js -> Profile
 // We use emoji as icons so we don't need an extra icon library.
 
 import { Text } from "react-native";
@@ -26,6 +27,10 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="events"
         options={{ title: "Events", tabBarIcon: () => <TabIcon emoji="📅" /> }}
+      />
+      <Tabs.Screen
+        name="jobs"
+        options={{ title: "Jobs", tabBarIcon: () => <TabIcon emoji="💼" /> }}
       />
       <Tabs.Screen
         name="profile"
