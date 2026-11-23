@@ -10,6 +10,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import InfoRow from "../../../components/InfoRow";
 import { openLink } from "../../../utils/openLink";
+import { COLORS } from "../../../constants/theme";
 
 export default function AlumniDetailScreen() {
   // Read the id from the URL.
@@ -40,7 +41,7 @@ export default function AlumniDetailScreen() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={COLORS.primary} />
       </View>
     );
   }
@@ -75,14 +76,14 @@ export default function AlumniDetailScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24 },
-  container: { padding: 24, backgroundColor: "#fff", flexGrow: 1 },
+  container: { padding: 24, backgroundColor: COLORS.white, flexGrow: 1 },
   name: { fontSize: 26, fontWeight: "bold", textAlign: "center" },
   role: {
     fontSize: 16,
-    color: "#2563eb",
+    color: COLORS.primary,
     textAlign: "center",
     textTransform: "capitalize",
     marginBottom: 16,
   },
-  error: { color: "red", fontSize: 16, textAlign: "center" },
+  error: { color: COLORS.danger, fontSize: 16, textAlign: "center" },
 });

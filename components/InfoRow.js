@@ -6,6 +6,7 @@
 // Used by the Profile screen and the Alumni details screen.
 
 import { View, Text, StyleSheet } from "react-native";
+import { COLORS } from "../constants/theme";
 
 export default function InfoRow({ label, value, onPress }) {
   return (
@@ -23,8 +24,8 @@ export default function InfoRow({ label, value, onPress }) {
 }
 
 const styles = StyleSheet.create({
-  row: { paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: "#eee" },
-  label: { fontSize: 14, color: "#666", marginBottom: 4 },
+  row: { paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: COLORS.borderLight },
+  label: { fontSize: 14, color: COLORS.textMuted, marginBottom: 4 },
   value: { fontSize: 16 },
-  link: { fontSize: 16, color: "#2563eb", textDecorationLine: "underline" },
+  link: { fontSize: 16, color: COLORS.primary, textDecorationLine: "underline" },
 });

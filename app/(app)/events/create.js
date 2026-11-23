@@ -17,6 +17,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import { isValidDate } from "../../../utils/formatDate";
+import { COLORS } from "../../../constants/theme";
 
 export default function CreateEventScreen() {
   const { user, profile } = useAuth();
@@ -99,7 +100,7 @@ export default function CreateEventScreen() {
       {error ? <Text style={styles.error}>{error}</Text> : null}
 
       <TouchableOpacity style={styles.button} onPress={handleCreate} disabled={busy}>
-        {busy ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Create Event</Text>}
+        {busy ? <ActivityIndicator color={COLORS.white} /> : <Text style={styles.buttonText}>Create Event</Text>}
       </TouchableOpacity>
     </ScrollView>
   );
@@ -107,18 +108,18 @@ export default function CreateEventScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24 },
-  container: { padding: 24, backgroundColor: "#fff", flexGrow: 1 },
-  label: { fontSize: 14, color: "#666", marginBottom: 4 },
+  container: { padding: 24, backgroundColor: COLORS.white, flexGrow: 1 },
+  label: { fontSize: 14, color: COLORS.textMuted, marginBottom: 4 },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: COLORS.border,
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
     fontSize: 16,
   },
   multiline: { height: 100, textAlignVertical: "top" }, // taller box, text starts at top
-  error: { color: "red", marginBottom: 12 },
-  button: { backgroundColor: "#2563eb", padding: 14, borderRadius: 8, alignItems: "center", marginTop: 8 },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
+  error: { color: COLORS.danger, marginBottom: 12 },
+  button: { backgroundColor: COLORS.primary, padding: 14, borderRadius: 8, alignItems: "center", marginTop: 8 },
+  buttonText: { color: COLORS.white, fontSize: 16, fontWeight: "bold" },
 });

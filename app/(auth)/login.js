@@ -14,6 +14,7 @@ import { Link } from "expo-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
 import { getAuthErrorMessage } from "../../utils/authErrors";
+import { COLORS } from "../../constants/theme";
 
 export default function LoginScreen() {
   // "State" = values that can change while the screen is open.
@@ -70,7 +71,7 @@ export default function LoginScreen() {
 
       <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={busy}>
         {busy ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color={COLORS.white} />
         ) : (
           <Text style={styles.buttonText}>Log In</Text>
         )}
@@ -85,24 +86,24 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 24, backgroundColor: "#fff" },
+  container: { flex: 1, justifyContent: "center", padding: 24, backgroundColor: COLORS.white },
   title: { fontSize: 28, fontWeight: "bold", textAlign: "center" },
-  subtitle: { fontSize: 16, color: "#666", textAlign: "center", marginBottom: 24 },
+  subtitle: { fontSize: 16, color: COLORS.textMuted, textAlign: "center", marginBottom: 24 },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: COLORS.border,
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
     fontSize: 16,
   },
-  error: { color: "red", marginBottom: 12 },
+  error: { color: COLORS.danger, marginBottom: 12 },
   button: {
-    backgroundColor: "#2563eb",
+    backgroundColor: COLORS.primary,
     padding: 14,
     borderRadius: 8,
     alignItems: "center",
   },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
-  link: { color: "#2563eb", textAlign: "center", marginTop: 16 },
+  buttonText: { color: COLORS.white, fontSize: 16, fontWeight: "bold" },
+  link: { color: COLORS.primary, textAlign: "center", marginTop: 16 },
 });

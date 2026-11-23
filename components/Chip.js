@@ -3,6 +3,7 @@
 // When "selected" is true it is filled blue, otherwise it is just outlined.
 
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { COLORS } from "../constants/theme";
 
 export default function Chip({ label, selected, onPress }) {
   return (
@@ -15,13 +16,13 @@ export default function Chip({ label, selected, onPress }) {
 const styles = StyleSheet.create({
   chip: {
     borderWidth: 1,
-    borderColor: "#2563eb",
+    borderColor: COLORS.primary,
     borderRadius: 20,
     paddingVertical: 6,
     paddingHorizontal: 14,
     marginRight: 8,
   },
-  selected: { backgroundColor: "#2563eb" },
-  text: { color: "#2563eb" },
-  textSelected: { color: "#fff" },
+  selected: { backgroundColor: COLORS.primary },
+  text: { color: COLORS.primary },
+  textSelected: { color: COLORS.white },
 });

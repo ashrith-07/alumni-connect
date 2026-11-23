@@ -19,6 +19,7 @@ import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { BRANCHES } from "../../../constants/branches";
 import Chip from "../../../components/Chip";
+import { COLORS } from "../../../constants/theme";
 
 export default function DirectoryScreen() {
   const [alumni, setAlumni] = useState([]); // all alumni from Firestore
@@ -75,7 +76,7 @@ export default function DirectoryScreen() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={COLORS.primary} />
       </View>
     );
   }
@@ -139,28 +140,28 @@ export default function DirectoryScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16, backgroundColor: COLORS.white },
   search: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: COLORS.border,
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
     marginBottom: 12,
   },
-  filterLabel: { fontSize: 14, color: "#666", marginBottom: 6 },
+  filterLabel: { fontSize: 14, color: COLORS.textMuted, marginBottom: 6 },
   chipRow: { flexGrow: 0, marginBottom: 12 }, // flexGrow: 0 stops the row from stretching
-  error: { color: "red", marginBottom: 12 },
-  empty: { textAlign: "center", color: "#666", marginTop: 24 },
+  error: { color: COLORS.danger, marginBottom: 12 },
+  empty: { textAlign: "center", color: COLORS.textMuted, marginTop: 24 },
   card: {
     padding: 14,
     borderWidth: 1,
-    borderColor: "#eee",
+    borderColor: COLORS.borderLight,
     borderRadius: 10,
     marginBottom: 10,
-    backgroundColor: "#fafafa",
+    backgroundColor: COLORS.card,
   },
   name: { fontSize: 17, fontWeight: "bold" },
-  job: { fontSize: 15, color: "#333", marginTop: 2 },
-  meta: { fontSize: 13, color: "#666", marginTop: 4 },
+  job: { fontSize: 15, color: COLORS.text, marginTop: 2 },
+  meta: { fontSize: 13, color: COLORS.textMuted, marginTop: 4 },
 });

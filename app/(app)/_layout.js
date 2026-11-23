@@ -11,6 +11,7 @@
 import { Redirect, Stack } from "expo-router";
 import { View, ActivityIndicator } from "react-native";
 import { useAuth } from "../../context/AuthContext";
+import { COLORS } from "../../constants/theme";
 
 export default function AppLayout() {
   const { user, loading } = useAuth();
@@ -19,7 +20,7 @@ export default function AppLayout() {
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={COLORS.primary} />
       </View>
     );
   }
@@ -31,7 +32,14 @@ export default function AppLayout() {
 
   // Logged in -> show the screens.
   return (
-    <Stack>
+    // screenOptions apply to every screen in this Stack:
+    // blue back arrow, bold title.
+    <Stack
+      screenOptions={{
+        headerTintColor: COLORS.primary,
+        headerTitleStyle: { fontWeight: "bold", color: COLORS.text },
+      }}
+    >
       {/* The tabs have their own header, so hide the Stack's header here */}
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="alumni/[id]" options={{ title: "Alumni Profile" }} />

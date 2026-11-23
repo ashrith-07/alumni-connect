@@ -17,6 +17,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebaseConfig";
 import { getAuthErrorMessage } from "../../utils/authErrors";
+import { COLORS } from "../../constants/theme";
 
 export default function SignupScreen() {
   const [name, setName] = useState("");
@@ -109,7 +110,7 @@ export default function SignupScreen() {
 
       <TouchableOpacity style={styles.button} onPress={handleSignup} disabled={busy}>
         {busy ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color={COLORS.white} />
         ) : (
           <Text style={styles.buttonText}>Sign Up</Text>
         )}
@@ -123,11 +124,11 @@ export default function SignupScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, justifyContent: "center", padding: 24, backgroundColor: "#fff" },
+  container: { flexGrow: 1, justifyContent: "center", padding: 24, backgroundColor: COLORS.white },
   title: { fontSize: 28, fontWeight: "bold", textAlign: "center", marginBottom: 24 },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: COLORS.border,
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
@@ -138,16 +139,16 @@ const styles = StyleSheet.create({
   roleButton: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#2563eb",
+    borderColor: COLORS.primary,
     borderRadius: 8,
     padding: 12,
     alignItems: "center",
   },
-  roleSelected: { backgroundColor: "#2563eb" },
-  roleText: { color: "#2563eb", fontWeight: "bold" },
-  roleTextSelected: { color: "#fff", fontWeight: "bold" },
-  error: { color: "red", marginBottom: 12 },
-  button: { backgroundColor: "#2563eb", padding: 14, borderRadius: 8, alignItems: "center" },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
-  link: { color: "#2563eb", textAlign: "center", marginTop: 16 },
+  roleSelected: { backgroundColor: COLORS.primary },
+  roleText: { color: COLORS.primary, fontWeight: "bold" },
+  roleTextSelected: { color: COLORS.white, fontWeight: "bold" },
+  error: { color: COLORS.danger, marginBottom: 12 },
+  button: { backgroundColor: COLORS.primary, padding: 14, borderRadius: 8, alignItems: "center" },
+  buttonText: { color: COLORS.white, fontSize: 16, fontWeight: "bold" },
+  link: { color: COLORS.primary, textAlign: "center", marginTop: 16 },
 });

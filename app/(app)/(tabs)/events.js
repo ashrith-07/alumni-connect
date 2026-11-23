@@ -26,6 +26,7 @@ import {
 import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import { formatDate } from "../../../utils/formatDate";
+import { COLORS } from "../../../constants/theme";
 
 export default function EventsScreen() {
   const { user, profile } = useAuth();
@@ -76,7 +77,7 @@ export default function EventsScreen() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={COLORS.primary} />
       </View>
     );
   }
@@ -128,41 +129,41 @@ export default function EventsScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 16, backgroundColor: COLORS.white },
   createButton: {
-    backgroundColor: "#2563eb",
+    backgroundColor: COLORS.primary,
     padding: 12,
     borderRadius: 8,
     alignItems: "center",
     marginBottom: 12,
   },
-  createText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
-  error: { color: "red", marginBottom: 12 },
-  empty: { textAlign: "center", color: "#666", marginTop: 24 },
+  createText: { color: COLORS.white, fontSize: 16, fontWeight: "bold" },
+  error: { color: COLORS.danger, marginBottom: 12 },
+  empty: { textAlign: "center", color: COLORS.textMuted, marginTop: 24 },
   card: {
     padding: 14,
     borderWidth: 1,
-    borderColor: "#eee",
+    borderColor: COLORS.borderLight,
     borderRadius: 10,
     marginBottom: 12,
-    backgroundColor: "#fafafa",
+    backgroundColor: COLORS.card,
   },
   title: { fontSize: 18, fontWeight: "bold", marginBottom: 4 },
-  meta: { fontSize: 14, color: "#444", marginBottom: 2 },
-  description: { fontSize: 15, color: "#333", marginTop: 8 },
+  meta: { fontSize: 14, color: COLORS.text, marginBottom: 2 },
+  description: { fontSize: 15, color: COLORS.text, marginTop: 8 },
   footer: {
     flexDirection: "row", // put count and button side by side
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 12,
   },
-  count: { fontSize: 14, color: "#666" },
+  count: { fontSize: 14, color: COLORS.textMuted },
   rsvpButton: {
-    backgroundColor: "#2563eb",
+    backgroundColor: COLORS.primary,
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 8,
   },
-  goingButton: { backgroundColor: "#16a34a" },
-  rsvpText: { color: "#fff", fontWeight: "bold" },
+  goingButton: { backgroundColor: COLORS.success },
+  rsvpText: { color: COLORS.white, fontWeight: "bold" },
 });

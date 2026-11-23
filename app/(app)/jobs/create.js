@@ -17,6 +17,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../../context/AuthContext";
 import Chip from "../../../components/Chip";
+import { COLORS } from "../../../constants/theme";
 
 export default function PostJobScreen() {
   const { user, profile } = useAuth();
@@ -117,7 +118,7 @@ export default function PostJobScreen() {
       {error ? <Text style={styles.error}>{error}</Text> : null}
 
       <TouchableOpacity style={styles.button} onPress={handlePost} disabled={busy}>
-        {busy ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Post Job</Text>}
+        {busy ? <ActivityIndicator color={COLORS.white} /> : <Text style={styles.buttonText}>Post Job</Text>}
       </TouchableOpacity>
     </ScrollView>
   );
@@ -125,19 +126,19 @@ export default function PostJobScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24 },
-  container: { padding: 24, backgroundColor: "#fff", flexGrow: 1 },
-  label: { fontSize: 14, color: "#666", marginBottom: 4 },
+  container: { padding: 24, backgroundColor: COLORS.white, flexGrow: 1 },
+  label: { fontSize: 14, color: COLORS.textMuted, marginBottom: 4 },
   chipRow: { flexDirection: "row", marginBottom: 12 },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: COLORS.border,
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
     fontSize: 16,
   },
   multiline: { height: 100, textAlignVertical: "top" },
-  error: { color: "red", marginBottom: 12 },
-  button: { backgroundColor: "#2563eb", padding: 14, borderRadius: 8, alignItems: "center", marginTop: 8 },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
+  error: { color: COLORS.danger, marginBottom: 12 },
+  button: { backgroundColor: COLORS.primary, padding: 14, borderRadius: 8, alignItems: "center", marginTop: 8 },
+  buttonText: { color: COLORS.white, fontSize: 16, fontWeight: "bold" },
 });

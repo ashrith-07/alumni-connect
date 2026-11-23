@@ -20,6 +20,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { BRANCHES } from "../../../constants/branches";
 import InfoRow from "../../../components/InfoRow";
 import { openLink } from "../../../utils/openLink";
+import { COLORS } from "../../../constants/theme";
 
 export default function ProfileScreen() {
   // user = Firebase login (has uid, email). profile = our data from Firestore.
@@ -44,7 +45,7 @@ export default function ProfileScreen() {
   if (!profile) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={COLORS.primary} />
       </View>
     );
   }
@@ -193,7 +194,7 @@ export default function ProfileScreen() {
       {error ? <Text style={styles.error}>{error}</Text> : null}
 
       <TouchableOpacity style={styles.button} onPress={handleSave} disabled={busy}>
-        {busy ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Save</Text>}
+        {busy ? <ActivityIndicator color={COLORS.white} /> : <Text style={styles.buttonText}>Save</Text>}
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -209,20 +210,20 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
-  container: { padding: 24, backgroundColor: "#fff", flexGrow: 1 },
+  container: { padding: 24, backgroundColor: COLORS.white, flexGrow: 1 },
   name: { fontSize: 26, fontWeight: "bold", textAlign: "center" },
   role: {
     fontSize: 16,
-    color: "#2563eb",
+    color: COLORS.primary,
     textAlign: "center",
     textTransform: "capitalize", // "alumni" -> "Alumni"
     marginBottom: 16,
   },
-  success: { color: "green", textAlign: "center", marginBottom: 12 },
-  label: { fontSize: 14, color: "#666", marginBottom: 4 },
+  success: { color: COLORS.success, textAlign: "center", marginBottom: 12 },
+  label: { fontSize: 14, color: COLORS.textMuted, marginBottom: 4 },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: COLORS.border,
     borderRadius: 8,
     padding: 12,
     marginBottom: 12,
@@ -231,23 +232,23 @@ const styles = StyleSheet.create({
   chipRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginBottom: 12 },
   chip: {
     borderWidth: 1,
-    borderColor: "#2563eb",
+    borderColor: COLORS.primary,
     borderRadius: 20,
     paddingVertical: 6,
     paddingHorizontal: 14,
   },
-  chipSelected: { backgroundColor: "#2563eb" },
-  chipText: { color: "#2563eb" },
-  chipTextSelected: { color: "#fff" },
-  error: { color: "red", marginBottom: 12 },
+  chipSelected: { backgroundColor: COLORS.primary },
+  chipText: { color: COLORS.primary },
+  chipTextSelected: { color: COLORS.white },
+  error: { color: COLORS.danger, marginBottom: 12 },
   button: {
-    backgroundColor: "#2563eb",
+    backgroundColor: COLORS.primary,
     padding: 14,
     borderRadius: 8,
     alignItems: "center",
     marginTop: 16,
   },
-  buttonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
+  buttonText: { color: COLORS.white, fontSize: 16, fontWeight: "bold" },
   cancelButton: { padding: 14, alignItems: "center", marginTop: 8 },
-  cancelText: { color: "#666", fontSize: 16 },
+  cancelText: { color: COLORS.textMuted, fontSize: 16 },
 });

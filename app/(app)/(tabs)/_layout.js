@@ -7,6 +7,7 @@
 
 import { Text } from "react-native";
 import { Tabs } from "expo-router/tabs";
+import { COLORS } from "../../../constants/theme";
 
 // Small helper that turns an emoji into a tab icon.
 function TabIcon({ emoji }) {
@@ -15,7 +16,15 @@ function TabIcon({ emoji }) {
 
 export default function TabsLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "#2563eb" }}>
+    // screenOptions apply to every tab: blue for the selected tab,
+    // grey for the others, and a bold title in the top bar.
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarInactiveTintColor: COLORS.textMuted,
+        headerTitleStyle: { fontWeight: "bold", color: COLORS.text },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{ title: "Home", tabBarIcon: () => <TabIcon emoji="🏠" /> }}
